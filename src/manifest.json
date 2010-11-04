@@ -3,7 +3,7 @@
   "version": "1.0",
   "description": "Applies lazy image loading to every web page, i.e. it'll only load the images currently visible.  Great for image-heavy forum threads etc.",
   "browser_action": {
-    "default_icon": "32x32.png"
+    "default_icon": "icon_on.png"
   },
   "background_page": "background.html",
   "content_scripts": [
