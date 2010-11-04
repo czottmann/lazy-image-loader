@@ -1,0 +1,74 @@
+<html>
+  <script>
+
+    var KEY_ENABLED = "enabled";
+
+
+    /**
+    * Returns the current extension state, i.e. whether the extension
+    * is switched on or off.
+    *
+    * @returns  {Boolean} 
+    */
+
+    function getState() {
+      return ( localStorage[ KEY_ENABLED ] === "true" );
+    }
+
+
+    /**
+    * Enables/disables the extension.
+    *
+    * @param    toggle {Boolean} 
+    */
+
+    function setState( newState ) {
+      localStorage[ KEY_ENABLED ] = newState;
+    }
+
+
+    /**
+    * Refreshes the tab icon.  Pass a boolean to set the on or off icon.
+    *
+    * @param    state {Boolean}
+    */
+
+    function setIconState( state ) {
+      chrome.browserAction.setIcon({
+        path: "icon_" + ( state === true ? "on" : "off" ) + ".png"
+      });
+    }
+
+
+    chrome.browserAction.onClicked.addListener( function( tab ) {
+      var newState = !getState();
+      
+      setState( newState );
+      setIconState( newState );
+    });
+
+
+    chrome.extension.onRequest.addListener(
+      function( request, sender, sendResponse ) {
+        var resp;
+
+        switch( request.msg ) {
+          case "getState":
+            resp = getState();
+            break;
+        }
+        
+        sendResponse( resp );
+      }
+    );
+
+
+    if ( typeof localStorage[ KEY_ENABLED ] === "undefined" ) {
+      setState( true );
+    }
+
+    setIconState( getState() ); 
+
+  </script>
+</html>
+

@@ -1,0 +1,16 @@
+{
+  "name": "Lazy Image Loader",
+  "version": "1.0",
+  "description": "Applies lazy image loading to every web page, i.e. it'll only load the images currently visible.  Great for image-heavy forum threads etc.",
+  "browser_action": {
+    "default_icon": "32x32.png"
+  },
+  "background_page": "background.html",
+  "content_scripts": [
+    {
+      "matches": [ "http://*/*", "https://*/*" ],
+      "js": [ "main.js" ],
+      "run_at": "document_end"
+    }
+  ]
+}
